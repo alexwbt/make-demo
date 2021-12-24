@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package proto;
+
+message Vec2f {
+    float x = 1;
+    float y = 2;
+}
+
+message Vec2d {
+    double x = 1;
+    double y = 2;
+}
+
+message Vec2i {
+    int32 x = 1;
+    int32 y = 2;
+}
+
+message Vec2l {
+    int64 x = 1;
+    int64 y = 2;
+}
