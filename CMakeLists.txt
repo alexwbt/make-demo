@@ -33,10 +33,10 @@ add_subdirectory(external/glfw)
 
 # main executable
 set(SRC_DIR ./src)
-set(SRC
+set(MAIN_SOURCES
     ${SRC_DIR}/main.cpp
 )
-add_executable(${PROJECT_NAME} ${SRC})
+add_executable(${PROJECT_NAME} ${MAIN_SOURCES})
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC external/glfw/include
