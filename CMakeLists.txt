@@ -30,6 +30,7 @@ endif()
 # subdirectories
 add_subdirectory(proto)
 add_subdirectory(external/glfw)
+add_subdirectory(external/glad)
 
 # main executable
 set(SRC_DIR ./src)
@@ -40,9 +41,11 @@ add_executable(${PROJECT_NAME} ${MAIN_SOURCES})
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC external/glfw/include
+    PUBLIC external/glad/include
 )
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE proto
     PRIVATE glfw
+    PRIVATE glad
 )
