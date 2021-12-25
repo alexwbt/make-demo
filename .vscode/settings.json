@@ -2,5 +2,8 @@
     "files.associations": {
         "memory": "cpp"
     },
-    "C_Cpp.default.cppStandard": "c++17"
+    "C_Cpp.default.cppStandard": "c++17",
+    "cSpell.words": [
+        "glfw"
+    ]
 }
