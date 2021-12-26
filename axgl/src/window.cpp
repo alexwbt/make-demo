@@ -34,40 +34,48 @@ namespace axgl
     {
         if (!initialized_ || terminated_)
             return;
+
+        for (const auto &[glfw_window, window] : windows_)
+            window->Destroy();
+
         glfwTerminate();
         terminated_ = true;
     }
 
-    void Window::PollEvents()
-    {
-        glfwPollEvents();
-    }
-
     bool Window::Running()
     {
-        bool running = false;
+        for (const auto &[glfw_window, window] : windows_)
+            if (!glfwWindowShouldClose(glfw_window))
+                return true;
+        return false;
+    }
+
+    void Window::Update()
+    {
+        // destroy closed windows
         for (auto it = windows_.begin(); it != windows_.end();)
         {
             const auto &glfw_window = it->first;
             const auto &window = it->second;
-            if (glfwWindowShouldClose(glfw_window))
+            if (window->destroyed_ || glfwWindowShouldClose(glfw_window))
             {
-                window->Destroy();
+                it->second->Destroy();
                 it = windows_.erase(it);
             }
             else
-            {
-                running = true;
                 ++it;
-            }
         }
-        return running;
+
+        glfwPollEvents();
     }
 
     /* Non-static */
 
     Window::Window(int width, int height, const std::string &title)
     {
+        if (!initialized_ || terminated_)
+            throw std::runtime_error("Failed to create window, GLFW not initialized.");
+
         glfw_window_ = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
         if (!glfw_window_)
             throw std::runtime_error("Failed to create window " + title + ".");
@@ -92,11 +100,20 @@ namespace axgl
         Destroy();
     }
 
+    void Window::SetEventListener(std::shared_ptr<EventListener> event_listener)
+    {
+        event_listener_ = std::move(event_listener);
+    }
+
+    void Window::SetRenderer(std::shared_ptr<Renderer> renderer)
+    {
+        renderer_ = std::move(renderer);
+    }
+
     void Window::Destroy()
     {
         if (!destroyed_)
         {
-            windows_.erase(glfw_window_);
             glfwDestroyWindow(glfw_window_);
             destroyed_ = true;
         }

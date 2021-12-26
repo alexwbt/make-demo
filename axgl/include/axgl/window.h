@@ -19,6 +19,7 @@ namespace axgl
         struct Renderer
         {
             virtual ~Renderer() {}
+            virtual void Render() = 0;
         };
 
     private:
@@ -31,8 +32,8 @@ namespace axgl
     public:
         static void InitializeGlfw();
         static void TerminateGlfw();
-        static void PollEvents();
         static bool Running();
+        static void Update();
 
     private:
         GLFWwindow *glfw_window_;
@@ -45,6 +46,10 @@ namespace axgl
     public:
         Window(int width, int height, const std::string &title);
         ~Window();
+
+    public:
+        void SetEventListener(std::shared_ptr<EventListener> event_listener);
+        void SetRenderer(std::shared_ptr<Renderer> renderer);
 
     private:
         void Destroy();
