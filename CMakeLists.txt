@@ -22,27 +22,10 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     endif()
 endif()
 
-# subdirectories
-add_subdirectory(proto)
+# subdirectories to build
 add_subdirectory(external/glfw)
 add_subdirectory(external/glad)
 
-# main executable
-set(SRC_DIR ./src)
-set(MAIN_SOURCES
-    ${SRC_DIR}/main.cpp
-)
-add_executable(${PROJECT_NAME} ${MAIN_SOURCES})
-
-target_include_directories(${PROJECT_NAME}
-    PUBLIC external/glfw/include
-    PUBLIC external/glad/include
-    PUBLIC external/glm
-    PUBLIC external/stb
-)
-
-target_link_libraries(${PROJECT_NAME}
-    PRIVATE proto
-    PRIVATE glfw
-    PRIVATE glad
-)
+add_subdirectory(proto)
+add_subdirectory(axgl)
+add_subdirectory(playground)

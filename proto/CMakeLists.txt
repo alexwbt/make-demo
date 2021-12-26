@@ -5,20 +5,20 @@ find_package(Protobuf REQUIRED)
 
 # generate proto
 set(PROTO_SOURCES
-    vec2.proto
+    src/vec2.proto
 )
 protobuf_generate_cpp(LIB_SOURCES LIB_HEADERS ${PROTO_SOURCES})
 
 # includes
 target_include_directories(${PROTO_LIB}
-    PUBLIC .
+    PUBLIC
     ${CMAKE_CURRENT_BINARY_DIR}
     ${Protobuf_INCLUDE_DIRS}
 )
 
 # links
 target_link_libraries(${PROTO_LIB}
-    ${Protobuf_LIBRARIES}
+    PRIVATE ${Protobuf_LIBRARIES}
 )
 
 # sources

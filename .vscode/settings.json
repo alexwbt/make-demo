@@ -1,9 +1,11 @@
 {
     "files.associations": {
-        "memory": "cpp"
+        "memory": "cpp",
+        "unordered_map": "cpp"
     },
     "C_Cpp.default.cppStandard": "c++17",
     "cSpell.words": [
+        "axgl",
         "glfw"
     ]
 }
