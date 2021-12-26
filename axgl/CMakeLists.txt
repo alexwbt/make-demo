@@ -9,6 +9,7 @@ target_sources(axgl
 target_include_directories(axgl
     PRIVATE
     glfw/include
+    glad/include
     PUBLIC
     ./include
 )
@@ -16,4 +17,5 @@ target_include_directories(axgl
 target_link_libraries(axgl
     PRIVATE
     glfw
+    glad
 )

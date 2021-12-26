@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 namespace axgl
@@ -10,6 +11,7 @@ namespace axgl
 
     bool Window::initialized_ = false;
     bool Window::terminated_ = false;
+    bool Window::initialized_glad_ = false;
 
     std::unordered_map<GLFWwindow *, Window *> Window::windows_;
 
@@ -74,6 +76,13 @@ namespace axgl
         // glfwSetKeyCallback(window, GlfwManager::KeyCallback);
         // glfwSetCursorPosCallback(window, GlfwManager::MouseCallback);
         // glfwSetFramebufferSizeCallback(window, GlfwManager::ResizeCallback);
+
+        if (!initialized_glad_)
+        {
+            if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+                throw std::runtime_error("Failed to initialize GLAD.");
+            initialized_glad_ = true;
+        }
 
         windows_.insert({glfw_window_, this});
     }

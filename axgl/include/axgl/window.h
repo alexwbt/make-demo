@@ -24,6 +24,7 @@ namespace axgl
     private:
         static bool initialized_;
         static bool terminated_;
+        static bool initialized_glad_;
 
         static std::unordered_map<GLFWwindow *, Window *> windows_;
 
