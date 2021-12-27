@@ -2,7 +2,8 @@
     "files.associations": {
         "memory": "cpp",
         "unordered_map": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "chrono": "cpp"
     },
     "C_Cpp.default.cppStandard": "c++17",
     "cSpell.words": [

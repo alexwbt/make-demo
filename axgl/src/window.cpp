@@ -69,6 +69,16 @@ namespace axgl
         glfwPollEvents();
     }
 
+    void Window::RenderAll()
+    {
+        for (const auto &[glfw_window, window] : windows_)
+        {
+            glfwMakeContextCurrent(glfw_window);
+            window->Render();
+            glfwSwapBuffers(glfw_window);
+        }
+    }
+
     /* Non-static */
 
     Window::Window(int width, int height, const std::string &title)
@@ -108,6 +118,17 @@ namespace axgl
     void Window::SetRenderer(std::shared_ptr<Renderer> renderer)
     {
         renderer_ = std::move(renderer);
+    }
+
+    void Window::SetTitle(const std::string &title)
+    {
+        glfwSetWindowTitle(glfw_window_, title.c_str());
+    }
+
+    void Window::Render()
+    {
+        if (renderer_)
+            renderer_->Render();
     }
 
     void Window::Destroy()

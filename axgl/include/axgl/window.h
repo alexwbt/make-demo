@@ -34,6 +34,7 @@ namespace axgl
         static void TerminateGlfw();
         static bool Running();
         static void Update();
+        static void RenderAll();
 
     private:
         GLFWwindow *glfw_window_;
@@ -51,7 +52,10 @@ namespace axgl
         void SetEventListener(std::shared_ptr<EventListener> event_listener);
         void SetRenderer(std::shared_ptr<Renderer> renderer);
 
+        void SetTitle(const std::string& title);
+
     private:
+        void Render();
         void Destroy();
     };
 }
