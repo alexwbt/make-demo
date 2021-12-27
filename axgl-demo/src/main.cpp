@@ -8,7 +8,7 @@ int main()
     {
         axgl::Window::InitializeGlfw();
 
-        axgl::Window window(800, 600, "Playground");
+        axgl::Window window(800, 600, "axgl demo");
 
         while (axgl::Window::Running())
         {

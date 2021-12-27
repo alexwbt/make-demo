@@ -32,5 +32,5 @@ add_subdirectory(proto)
 add_subdirectory(network)
 
 # executables
-add_subdirectory(main)
+add_subdirectory(axgl-demo)
 add_subdirectory(network-demo)
