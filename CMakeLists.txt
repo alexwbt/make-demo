@@ -26,6 +26,11 @@ endif()
 add_subdirectory(external/glfw)
 add_subdirectory(external/glad)
 
-add_subdirectory(proto)
+# libraries
 add_subdirectory(axgl)
-add_subdirectory(playground)
+add_subdirectory(proto)
+add_subdirectory(network)
+
+# executables
+add_subdirectory(main)
+add_subdirectory(network-demo)

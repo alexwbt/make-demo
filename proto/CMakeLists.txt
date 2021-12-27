@@ -5,7 +5,7 @@ find_package(Protobuf REQUIRED)
 
 # generate protobuf
 protobuf_generate_cpp(LIB_SOURCES LIB_HEADERS
-    src/vec2.proto
+    src/string_message.proto
 )
 
 target_sources(proto

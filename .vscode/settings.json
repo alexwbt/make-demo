@@ -7,6 +7,13 @@
     "C_Cpp.default.cppStandard": "c++17",
     "cSpell.words": [
         "axgl",
-        "glfw"
+        "glfw",
+        "opengl"
+    ],
+    "cmake.configureOnOpen": true,
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "cmake.buildDirectory": "${workspaceFolder}/_build",
+    "cmake.configureArgs": [
+        "-DGLFW_BUILD_DOCS=OFF"
     ]
 }
