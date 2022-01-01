@@ -4,6 +4,7 @@ add_library(axgl)
 target_sources(axgl
     PRIVATE
     ./src/window.cpp
+    ./src/gameloop.cpp
 )
 
 target_include_directories(axgl
