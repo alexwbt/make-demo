@@ -14,6 +14,12 @@ namespace axgl
         struct EventListener
         {
             virtual ~EventListener() {}
+            virtual void KeyDown(int key) {}
+            virtual void KeyUp(int key) {}
+            virtual void MouseMove(double x, double y) {}
+            virtual void MouseDown(int button) {}
+            virtual void MouseUp(int button) {}
+            virtual void Resized(int width, int height) {}
         };
 
         struct Renderer
@@ -52,7 +58,7 @@ namespace axgl
         void SetEventListener(std::shared_ptr<EventListener> event_listener);
         void SetRenderer(std::shared_ptr<Renderer> renderer);
 
-        void SetTitle(const std::string& title);
+        void SetTitle(const std::string &title);
 
     private:
         void Render();

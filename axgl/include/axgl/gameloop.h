@@ -14,6 +14,6 @@ namespace axgl
 
         virtual bool Running() { return false; }
         virtual void Update() {}
-        virtual void Render() {}
+        virtual void DidUpdate() {}
     };
 }

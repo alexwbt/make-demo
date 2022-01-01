@@ -1,25 +1,6 @@
 #include <iostream>
 
-#include <axgl/window.h>
-#include <axgl/gameloop.h>
-
-class Game : public axgl::Gameloop
-{
-    bool Running() override
-    {
-        return axgl::Window::Running();
-    }
-
-    void Update() override
-    {
-        axgl::Window::Update();
-    }
-
-    void Render() override
-    {
-        axgl::Window::RenderAll();
-    }
-};
+#include "game.h"
 
 int main()
 {
@@ -36,7 +17,7 @@ int main()
     }
     catch (const std::exception &error)
     {
-        std::cerr << error.what() << '\n';
+        std::cerr << error.what() << std::endl;
         return -1;
     }
 

@@ -30,7 +30,7 @@ namespace axgl
         }
 
         if (delta_time >= 1)
-            Render();
+            DidUpdate();
 
         return output_delta_time;
     }
