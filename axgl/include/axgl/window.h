@@ -42,6 +42,14 @@ namespace axgl
         static void Update();
         static void RenderAll();
 
+        static void CursorPosCallback(GLFWwindow *glfw_window, double x, double y);
+        static void MouseButtonCallback(GLFWwindow *glfw_window, int button, int action, int mods);
+        static void KeyCallback(GLFWwindow *glfw_window, int key, int scancode, int action, int mods);
+        static void FramebufferSizeCallback(GLFWwindow *glfw_window, int width, int height);
+
+    private:
+        static Window *GetWindow(GLFWwindow *glfw_window);
+
     private:
         GLFWwindow *glfw_window_;
 

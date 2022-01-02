@@ -1,6 +1,6 @@
 #include "axgl/window.h"
 
-#include <string>
+#include <iostream>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -79,6 +79,57 @@ namespace axgl
         }
     }
 
+    void Window::CursorPosCallback(GLFWwindow *glfw_window, double x, double y)
+    {
+        auto *window = GetWindow(glfw_window);
+        if (window && window->event_listener_)
+            window->event_listener_->MouseMove(x, y);
+    }
+
+    void Window::MouseButtonCallback(GLFWwindow *glfw_window, int button, int action, int mods)
+    {
+        auto *window = GetWindow(glfw_window);
+        if (window && window->event_listener_)
+            window->event_listener_->MouseDown(button);
+    }
+
+    void Window::KeyCallback(GLFWwindow *glfw_window, int key, int scancode, int action, int mods)
+    {
+        auto *window = GetWindow(glfw_window);
+        if (!window || !window->event_listener_)
+            return;
+
+        switch (action)
+        {
+        case GLFW_PRESS:
+            window->event_listener_->KeyDown(key);
+            break;
+        case GLFW_RELEASE:
+            window->event_listener_->KeyUp(key);
+            break;
+        }
+    }
+
+    void Window::FramebufferSizeCallback(GLFWwindow *glfw_window, int width, int height)
+    {
+        auto *window = GetWindow(glfw_window);
+        if (window && window->event_listener_)
+            window->event_listener_->Resized(width, height);
+    }
+
+    Window *Window::GetWindow(GLFWwindow *glfw_window)
+    {
+        try
+        {
+            return windows_.at(glfw_window);
+        }
+        catch (const std::out_of_range &e)
+        {
+            std::cerr << "Tried to get GLFW window that does bot exists." << std::endl;
+            return nullptr;
+        }
+    }
+
     /* Non-static */
 
     Window::Window(int width, int height, const std::string &title)
@@ -91,9 +142,11 @@ namespace axgl
             throw std::runtime_error("Failed to create window " + title + ".");
 
         glfwMakeContextCurrent(glfw_window_);
-        // glfwSetKeyCallback(window, GlfwManager::KeyCallback);
-        // glfwSetCursorPosCallback(window, GlfwManager::MouseCallback);
-        // glfwSetFramebufferSizeCallback(window, GlfwManager::ResizeCallback);
+
+        glfwSetCursorPosCallback(glfw_window_, Window::CursorPosCallback);
+        glfwSetMouseButtonCallback(glfw_window_, Window::MouseButtonCallback);
+        glfwSetKeyCallback(glfw_window_, Window::KeyCallback);
+        glfwSetFramebufferSizeCallback(glfw_window_, Window::FramebufferSizeCallback);
 
         if (!initialized_glad_)
         {

@@ -13,6 +13,11 @@ class Game
         return axgl::Window::Running();
     }
 
+    void MouseMove(double x, double y) override
+    {
+        std::cout << "Mouse Moved: " << x << ' ' << y << std::endl;
+    }
+
     void Update() override
     {
         axgl::Window::Update();

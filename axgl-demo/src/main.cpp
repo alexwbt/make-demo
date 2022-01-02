@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 
 #include "game.h"
 
@@ -8,10 +9,11 @@ int main()
     {
         axgl::Window::InitializeGlfw();
 
+        auto game = std::make_shared<Game>();
         axgl::Window window(800, 600, "axgl demo");
+        window.SetEventListener(game);
 
-        Game game;
-        game.Run();
+        game->Run();
 
         axgl::Window::TerminateGlfw();
     }
