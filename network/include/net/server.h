@@ -44,6 +44,11 @@ namespace net
             uint64_t command,
             std::shared_ptr<const google::protobuf::Message> body = nullptr
         );
+        void SendToAllIf(
+            std::function<bool(net::Connection&)> predicate,
+            uint64_t command,
+            std::shared_ptr<const google::protobuf::Message> body = nullptr
+        );
 
         void Update(ServerCallback& callback);
     };

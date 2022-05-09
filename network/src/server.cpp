@@ -29,7 +29,7 @@ namespace net
             };
             context_thread_ = std::thread(run);
         }
-        catch (const std::exception&)
+        catch (const std::exception &)
         {
             return false;
         }
@@ -62,13 +62,23 @@ namespace net
 
     void Server::SendToAll(
         uint64_t command,
-        std::shared_ptr<const google::protobuf::Message> body
-    ) {
-        for (const auto& connection : connections_)
+        std::shared_ptr<const google::protobuf::Message> body)
+    {
+        for (const auto &connection : connections_)
             connection->PushMessage(command, body);
     }
 
-    void Server::Update(ServerCallback& callback)
+    void Server::SendToAllIf(
+        std::function<bool(net::Connection &)> predicate,
+        uint64_t command,
+        std::shared_ptr<const google::protobuf::Message> body)
+    {
+        for (const auto &connection : connections_)
+            if (predicate && predicate(*connection))
+                connection->PushMessage(command, body);
+    }
+
+    void Server::Update(ServerCallback &callback)
     {
         // handle new connections
         auto handle_new_connection = [this, &callback](std::shared_ptr<asio::ip::tcp::socket> socket)

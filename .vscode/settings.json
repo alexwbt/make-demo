@@ -83,7 +83,13 @@
         "strstream": "cpp",
         "thread": "cpp",
         "unordered_set": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "*.ipp": "cpp",
+        "*.tcc": "cpp",
+        "hash_map": "cpp",
+        "hash_set": "cpp",
+        "memory_resource": "cpp",
+        "source_location": "cpp"
     },
     "C_Cpp.default.cppStandard": "c++17",
     "cSpell.words": [

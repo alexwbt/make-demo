@@ -2,8 +2,14 @@
 
 #include <string_message.pb.h>
 
-struct ServerCallback : public net::ServerCallback
+class ServerCallback : public net::ServerCallback
 {
+    std::weak_ptr<net::Server> server_;
+
+public:
+    ServerCallback(std::weak_ptr<net::Server> server)
+        : server_(server) {}
+
     void OnClientConnect(std::shared_ptr<net::Connection> c) override
     {
         std::cout << "New client(" << c->GetId() << ") connected." << std::endl;
@@ -19,17 +25,27 @@ struct ServerCallback : public net::ServerCallback
         if (packet->header.body_size == 0)
             return;
 
-        proto::StringMessage message;
-        if (message.ParseFromArray(packet->body->data(), static_cast<int>(packet->body->size())))
-            std::cout << message.message() << std::endl;
+        auto message = std::make_shared<proto::StringMessage>();
+        if (message->ParseFromArray(packet->body->data(), static_cast<int>(packet->body->size())))
+        {
+            if (auto server = server_.lock())
+            {
+                auto predicate = [packet](net::Connection &c)
+                {
+                    return c.GetId() != packet->connection_id;
+                };
+                server->SendToAllIf(predicate, 1, message);
+            }
+            std::cout << message->message() << std::endl;
+        }
     }
 };
 
 int main()
 {
     constexpr uint16_t kPort = 5625;
-    net::Server server(kPort);
-    auto success = server.Start();
+    auto server = std::make_shared<net::Server>(kPort);
+    auto success = server->Start();
     if (!success)
     {
         std::cout << "Failed to start server." << std::endl;
@@ -37,11 +53,11 @@ int main()
     }
     std::cout << "Server started on port " << kPort << std::endl;
 
-    ServerCallback callback;
+    ServerCallback callback(server);
     while (true)
     {
-        server.Update(callback);
+        server->Update(callback);
     }
 
-    server.Stop();
+    server->Stop();
 }
