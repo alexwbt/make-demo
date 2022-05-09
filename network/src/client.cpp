@@ -66,7 +66,7 @@ namespace net
     {
         // handle disconnection
         if (connection_ && !connection_->Connected())
-            callback.OnDisconnect(std::move(connection_));
+            callback.OnDisconnect(connection_);
 
         // handle messages
         auto handle_message = [&callback](std::shared_ptr<Packet> packet)
