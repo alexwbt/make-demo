@@ -7,24 +7,6 @@
 
 namespace net
 {
-    struct Header
-    {
-        uint64_t command = 0;
-        uint64_t body_size = 0;
-    };
-
-    struct MessageItem
-    {
-        Header header;
-        std::shared_ptr<const google::protobuf::Message> body = nullptr;
-    };
-
-    struct Packet
-    {
-        Header header;
-        std::shared_ptr<std::vector<char>> body = nullptr;
-    };
-
     template <typename ItemType>
     class MessageQueue
     {

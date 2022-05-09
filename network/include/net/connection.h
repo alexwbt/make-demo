@@ -5,6 +5,26 @@
 
 namespace net
 {
+    struct Header
+    {
+        uint64_t command = 0;
+        uint64_t body_size = 0;
+    };
+
+    struct MessageItem
+    {
+        Header header;
+        std::shared_ptr<const google::protobuf::Message> body = nullptr;
+    };
+
+    struct Packet
+    {
+        uint32_t connection_id;
+
+        Header header;
+        std::shared_ptr<std::vector<char>> body = nullptr;
+    };
+
     class Connection
     {
     private:
@@ -23,8 +43,7 @@ namespace net
             std::shared_ptr<MessageQueue<Packet>> input_queue,
             std::shared_ptr<asio::io_context> context,
             std::shared_ptr<asio::ip::tcp::socket> socket,
-            uint32_t id = 0
-        );
+            uint32_t id = 0);
 
         bool Connected() const;
 
@@ -45,8 +64,8 @@ namespace net
     public:
         void PushMessage(
             uint64_t command,
-            std::shared_ptr<const google::protobuf::Message> body = nullptr
-        );
+            std::shared_ptr<const google::protobuf::Message> body = nullptr);
+
     private:
         void SendHeader();
         void SendBody();
