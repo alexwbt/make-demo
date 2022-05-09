@@ -125,6 +125,8 @@ namespace net
     void Connection::ReadHeader()
     {
         temp_input_item_ = std::make_shared<Packet>();
+        temp_input_item_->connection_id = GetId();
+
         auto buffer = asio::buffer(&temp_input_item_->header, sizeof(Header));
 
         auto on_read = [this](std::error_code error, std::size_t size)
